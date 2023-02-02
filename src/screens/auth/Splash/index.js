@@ -8,10 +8,11 @@ const Splash = () => {
         <View style={styles.container}>
             <Image resizeMode="contain" style={styles.image} source={require('../../../assets/10050.png')} />
 
-            <View style={styles.titleContainer} />
+            <View style={styles.titleContainer}>
             <Text style={styles.title}>You'll Find</Text>
             <Text style={[styles.title, styles.innerTitle]}>All you need</Text>
             <Text style={styles.title}>here!</Text>
+            </View>
 
             <Button title="Sign up" />
 
