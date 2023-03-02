@@ -6,7 +6,7 @@ import { styles } from "./styles";
 const Splash = () => {
     return (
         <View style={styles.container}>
-            <Image resizeMode="contain" style={styles.image} source={require('../../../assets/10050.png')} />
+            <Image resizeMode="contain" style={styles.image} source={require('../../../assets/splash_logo.png')} />
 
             <View style={styles.titleContainer}>
             <Text style={styles.title}>You'll Find</Text>
