@@ -8,25 +8,20 @@ import Separator from "../../../components/Separator";
 import GoogleLogin from "../../../components/GoogleLogin";
 import { styles } from "./styles";
 
-const Signup = () => {
+const Signin = () => {
     const [checked, setChecked] = useState(false);
 
     return (
         <View style={styles.container}>
-            <AuthHeader title="Sign Up" />
-            <Input label="Name" placeholder="John Doe"/>
+            <AuthHeader title="Sign In" />
             <Input label="Email" placeholder="example@gmail.com" />
             <Input isPassword label="Password" placeholder="********" />
-            <View style={styles.agreeRow}>
-                <Checkbox checked={checked} onCheck={setChecked} />
-                <Text style={styles.agreeText}>I agree to the <Text style={styles.agreeTextBold}>Terms of Service</Text> and <Text style={styles.agreeTextBold}>Privacy Policy</Text></Text>
-            </View>
             <Button style={styles.button} onPress={() => console.log('Clicked')} title="Sign Up" />
-            <Separator text="Or Sign Up With" />
+            <Separator text="Or sign in with" />
             <GoogleLogin />
-            <Text style={styles.footerText}>Already have an account? <Text style={styles.footerLink}>Sign In</Text></Text>
+            <Text style={styles.footerText}>Don't have an account? <Text style={styles.footerLink}>Sign Up</Text></Text>
         </View>
     )
 }
 
-export default Signup;
+export default Signin;

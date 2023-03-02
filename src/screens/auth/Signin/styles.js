@@ -5,18 +5,6 @@ export const styles = StyleSheet.create({
     container: {
         padding: 16,
     },
-    agreeRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16
-    },
-    agreeText: {
-        color: colors.blue,
-        marginHorizontal: 14
-    },
-    agreeTextBold: {
-        fontWeight: '700'
-    },
     button: {
         marginVertical: 20
     },
