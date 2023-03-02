@@ -33,7 +33,8 @@ export const styles = StyleSheet.create({
     footer: {
         padding: 24,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginRight: 75
     },
     save: {
         flex: 1
