@@ -78,8 +78,8 @@ const App = () => {
   useEffect(() => {
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-      webClientId: '561087672076-t9b4gp8i5l4n1cv55s9a4p66a8191lnr.apps.googleusercontent.com',
-      offlineAccess: true,
+      webClientId: Config.GOOGLE_WEB_CLIENT_ID,
+      offlineAccess: false,
       iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
     })
   }, [])
