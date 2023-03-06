@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
         marginTop: 6
     },
     arrow: {
-        height: 32,
-        width: 32
+        height: 20,
+        width: 10
     }
 });
