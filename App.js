@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 
 import Signin from "./src/screens/auth/Signin";
@@ -10,6 +10,7 @@ import Favorites from "./src/screens/app/Favorites";
 import Profile from "./src/screens/app/Profile";
 import Settings from "./src/screens/app/Settings";
 import ProductDetails from "./src/screens/app/ProductDetails";
+import CreateListing from "./src/screens/app/CreateListing";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -25,12 +26,16 @@ const Tab = createBottomTabNavigator();
 
 import Config from "react-native-config";
 import { colors } from "./src/utils/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export const userContext = React.createContext()
 
 const ProfileStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
-      <Stack.Screen name="Settings" component={Settings} options={{headerShown: false}}/>
+      <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+      <Stack.Screen name='CreateListing' component={CreateListing} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
@@ -61,7 +66,7 @@ const Tabs = () => {
         },
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {borderTopColor: colors.lightGrey}
+        tabBarStyle: { borderTopColor: colors.lightGrey }
       })}
     >
       <Tab.Screen name="Home" component={Home} />
@@ -73,13 +78,20 @@ const Tabs = () => {
 
 const App = () => {
 
-  const isSignedIn = true
+  const [user, setUser] = useState()
+
+  useEffect(() => {
+    (async () => {
+      const accessToken = await AsyncStorage.getItem('auth_token')
+      setUser({ accessToken })
+    })()
+  }, [])
 
   useEffect(() => {
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-      webClientId: Config.GOOGLE_WEB_CLIENT_ID,
-      offlineAccess: false,
+      webClientId: '366204043123-pdml2tlcqi7oeovairvdcl92thifghog.apps.googleusercontent.com',
+      offlineAccess: true,
       iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
     })
   }, [])
@@ -92,24 +104,26 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer theme={theme}>
-        <Stack.Navigator>
-          {
-            isSignedIn ? (
-              <>
-                <Stack.Screen name="Tabs" component={Tabs} options={{headerShown: false}} />
-                <Stack.Screen name="ProductDetails" component={ProductDetails} options={{headerShown: false}} />
-              </>
-            ) : (
-              <>
-                <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}} />
-                <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
-                <Stack.Screen name="Signin" component={Signin} options={{headerShown: false}}/>
-              </>
-            )
-          }
-        </Stack.Navigator>
-      </NavigationContainer>
+      <userContext.Provider value={{ user, setUser}}>
+        <NavigationContainer theme={theme}>
+          <Stack.Navigator>
+            {
+              user?.accessToken ? (
+                <>
+                  <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+                  <Stack.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
+                  <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
+                  <Stack.Screen name="Signin" component={Signin} options={{ headerShown: false }} />
+                </>
+              )
+            }
+          </Stack.Navigator>
+        </NavigationContainer>
+      </userContext.Provider>
     </SafeAreaProvider>
   )
 }
